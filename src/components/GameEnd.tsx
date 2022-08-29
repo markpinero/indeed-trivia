@@ -40,21 +40,21 @@ export default function GameEnd() {
 
   useEffect(() => {
     const highScore = localStorage.getItem('trivia-high-score');
+    const parsedHighScore: HighScore = JSON.parse(highScore as string);
 
-    if (highScore) {
-      const parsedHighScore: HighScore = JSON.parse(highScore);
+    if (parsedHighScore) {
       setExistingHighScore(parsedHighScore);
+    }
 
-      if (score > Number(existingHighScore?.score)) {
-        localStorage.setItem(
-          'trivia-high-score',
-          JSON.stringify({
-            score,
-            questionCount,
-            date: Date.now(),
-          } as HighScore)
-        );
-      }
+    if (!parsedHighScore || score > Number(existingHighScore?.score)) {
+      localStorage.setItem(
+        'trivia-high-score',
+        JSON.stringify({
+          score,
+          questionCount,
+          date: Date.now(),
+        } as HighScore)
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

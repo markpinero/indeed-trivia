@@ -20,14 +20,21 @@ export default function QuizForm({ questionNumber, questions }: Props) {
   const question = questions[questionNumber - 1];
   const [answer, setAnswer] = useState<number>();
   const [isCorrect, setIsCorrect] = useState<boolean>();
+  const [message, setMessage] = useState<string>('');
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!answer) {
+      setMessage('Please select an answer');
+      return;
+    }
 
     const isCorrect = question.correctAnswers.some(
       (correctAnswer) => correctAnswer === answer
     );
     setIsCorrect(isCorrect);
+    setMessage(isCorrect ? 'You got it right!' : 'Sorry, you got it wrong.');
     dispatch(updateScore(isCorrect));
   };
 
@@ -59,9 +66,9 @@ export default function QuizForm({ questionNumber, questions }: Props) {
           ))}
         </AnswerList>
       </fieldset>
-      <StyledResult isCorrect={isCorrect}>
-        {isCorrect ? 'You got it right!' : 'Sorry, you got it wrong.'}
-      </StyledResult>
+      <StyledMessage isCorrect={isCorrect} role='alert' aria-live='polite'>
+        {message}
+      </StyledMessage>
       {isCorrect === undefined ? (
         <Button>Submit</Button>
       ) : (
@@ -96,8 +103,11 @@ const AnswerList = styled.ol`
   }
 `;
 
-const StyledResult = styled.p<{ isCorrect: boolean | undefined }>`
+const StyledMessage = styled.p<{ isCorrect: boolean | undefined }>`
   color: ${(props) => (props.isCorrect ? 'green' : 'red')};
-  visibility: ${(props) =>
-    props.isCorrect === undefined ? 'hidden' : 'visible'};
+
+  &:empty {
+    height: 1.5em;
+    visibility: hidden;
+  }
 `;
