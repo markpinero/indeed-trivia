@@ -1,0 +1,43 @@
+@import-normalize;
+@import url('https://rsms.me/inter/inter.css');
+
+:root {
+  --font-fallback: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  --color-white: #fff;
+  --color-blue: #065fb1;
+  --color-outline: #6b7280;
+}
+
+html {
+  font-family: 'Inter', var(--font-fallback);
+}
+
+@supports (font-variation-settings: normal) {
+  html {
+    font-family: 'Inter var', var(--font-fallback);
+  }
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+fieldset,
+legend {
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+
+ol,
+ul {
+  padding: 0;
+}
+
+a:any-link {
+  color: var(--color-blue);
+}

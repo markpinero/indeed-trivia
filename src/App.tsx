@@ -1,16 +1,15 @@
 /** @jsxImportSource @emotion/react */
-import { ReactComponent as Logo } from "./IndeedLogo.svg";
+import { Route, Routes } from 'react-router-dom';
+import GameEnd from './components/GameEnd';
+import GameStart from './components/GameStart';
+import Quiz from './components/Quiz';
 
 export default function App() {
   return (
-    <div css={{ padding: "0 16px" }}>
-      <Logo />
-      <p css={{ fontFamily: "Roboto" }}>
-        Hello candidate. Welcome to the Indeed Design Engineering take home
-        exercise. You will find directions to get started in the readme file.
-        After reviewing the readme, please reach out to your recruiter with any
-        questions.
-      </p>
-    </div>
+    <Routes>
+      <Route path='/' element={<GameStart />} />
+      <Route path='/quiz' element={<Quiz />} />
+      <Route path='/result' element={<GameEnd />} />
+    </Routes>
   );
 }
